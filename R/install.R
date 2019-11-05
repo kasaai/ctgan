@@ -36,6 +36,7 @@ install_ctgan_verify <- function() {
 #' @param conda Path to conda executable (or "auto" to find conda using the
 #'   \code{PATH} and other conventional install locations).
 #' @param envname Name of Python environment to install within.
+#' @param restart_session Whether to restart R session after installation.
 #' @param ... Additional parameters.
 #'
 #' @details

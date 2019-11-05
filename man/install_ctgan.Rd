@@ -16,6 +16,8 @@ a method that will work in the local environment.}
 
 \item{envname}{Name of Python environment to install within.}
 
+\item{restart_session}{Whether to restart R session after installation.}
+
 \item{...}{Additional parameters.}
 }
 \description{

@@ -1,3 +1,11 @@
+#' Initialize a CTGAN Model
+#'
+#' Initializes a CTGAN model object
+#'
+#' @param embedding_dim Dimension of embedding layer.
+#' @param gen_dim Dimensions of generator layers.
+#' @param dis_dim Dimensions of discriminator layers.
+#' @param l2_scale ADAM weight decay.
 #' @export
 ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
                   dis_dim = c(256, 256), l2_scale = 1e-6) {
@@ -68,6 +76,14 @@ CTGANModel <- R6::R6Class(
   )
 )
 
+#' Train a CTGAN Model
+#'
+#' @param object A `CTGANModel` object.
+#' @param train_data Training data, should be a data frame.
+#' @param batch_size Batch size.
+#' @param epochs Number of epochs to train.
+#' @param ... Additional arguments, currently unused.
+#'
 #' @export
 fit.CTGANModel <-
   function(object, train_data,
@@ -77,6 +93,12 @@ fit.CTGANModel <-
     invisible(NULL)
   }
 
+#' Synthesize Data Using a CTGAN Model
+#'
+#' @param ctgan_model A fitted `CTGANModel` object.
+#' @param n Number of rows to generate.
+#' @param batch_size Batch size.
+#'
 #' @export
 ctgan_sample <- function(ctgan_model, n = 100, batch_size = 500) {
   ctgan_model$sample(n, batch_size)

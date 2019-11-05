@@ -2,9 +2,12 @@
 
 S3method(fit,CTGANModel)
 export("%<-%")
+export("%>%")
 export(ctgan)
 export(ctgan_sample)
 export(fit)
 export(install_ctgan)
 import(zeallot)
+importFrom(dplyr,.data)
 importFrom(generics,fit)
+importFrom(magrittr,"%>%")

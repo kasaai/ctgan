@@ -2,12 +2,13 @@
   if (is.null(x)) y else x
 }
 
+#' @importFrom dplyr .data
 transform_data <- function(train_data) {
   train_data <- train_data %>%
-    mutate_if(is.factor, ~ levels(.x)[.x]) %>%
-    mutate_if(is.logical, as.character) %>%
-    mutate_if(is.character, ~ ifelse(is.na(.x), "(Missing)", .x)) %>%
-    assertr::assert(assertr::not_na, everything())
+    dplyr::mutate_if(is.factor, ~ levels(.x)[.x]) %>%
+    dplyr::mutate_if(is.logical, as.character) %>%
+    dplyr::mutate_if(is.character, ~ ifelse(is.na(.x), "(Missing)", .x)) %>%
+    assertr::assert(assertr::not_na, dplyr::everything())
 
   col_classes <- lapply(train_data, class)
   bad_cols <- col_classes %>%
@@ -22,7 +23,7 @@ transform_data <- function(train_data) {
 
   rec <- recipes::recipe(train_data, ~ .) %>%
     recipes::step_integer(recipes::all_nominal(), zero_based = TRUE)
-  trained_rec <- prep(rec, train_data, retain = FALSE)
+  trained_rec <- recipes::prep(rec, train_data, retain = FALSE)
 
   metadata <- list(
     col_info = trained_rec$var_info %>%
@@ -33,7 +34,7 @@ transform_data <- function(train_data) {
   )
 
   list(
-    train_data = bake(trained_rec, train_data),
+    train_data = recipes::bake(trained_rec, train_data),
     metadata = metadata
   )
 }
