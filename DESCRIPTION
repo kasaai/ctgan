@@ -1,9 +1,19 @@
 Type: Package
 Package: ctgan
-Title: What the Package Does (Title Case)
+Title: Synthesizer Tabular Data Using Conditional GAN
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: 
+    c(
+      person(given = "Kevin",
+           family = "Kuo",
+           role = c("aut", "cre"),
+           email = "kevin@kasa.ai",
+           comment = c(ORCID = "0000-0001-7803-7901")),
+      person(given = "Lei",
+           family = "Xu",
+           role = c("aut", "cph"),
+           email = "leix@mit.edu")
+    )
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: Apache License (>= 2.0)
