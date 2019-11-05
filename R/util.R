@@ -1,0 +1,39 @@
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
+transform_data <- function(train_data) {
+  train_data <- train_data %>%
+    mutate_if(is.factor, ~ levels(.x)[.x]) %>%
+    mutate_if(is.logical, as.character) %>%
+    mutate_if(is.character, ~ ifelse(is.na(.x), "(Missing)", .x)) %>%
+    assertr::assert(assertr::not_na, everything())
+
+  col_classes <- lapply(train_data, class)
+  bad_cols <- col_classes %>%
+    purrr::discard(~ .x %in% c("numeric", "integer", "character"))
+
+  if (length(bad_cols)) {
+    stop(glue::glue("The following columns have unsupported types:
+                       {paste0(names(bad_cols), ' (', bad_cols, ')',
+                    collapse = ',')}"),
+         call. = FALSE)
+  }
+
+  rec <- recipes::recipe(train_data, ~ .) %>%
+    recipes::step_integer(recipes::all_nominal(), zero_based = TRUE)
+  trained_rec <- prep(rec, train_data, retain = FALSE)
+
+  metadata <- list(
+    col_info = trained_rec$var_info %>%
+      dplyr::select(.data$variable, .data$type),
+    categorical_levels = trained_rec$orig_lvls %>%
+      purrr::keep(~ length(.x$values) > 1) %>%
+      purrr::map("values")
+  )
+
+  list(
+    train_data = bake(trained_rec, train_data),
+    metadata = metadata
+  )
+}

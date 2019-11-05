@@ -1,0 +1,83 @@
+#' @export
+ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
+                  dis_dim = c(256, 256), l2_scale = 1e-6) {
+  python_path <- system.file("python", package = "ctgan")
+  ctgan <- reticulate::import_from_path("ctgan", path = python_path)
+  model <- ctgan$ctgan_model$CTGANSynthesizer(
+    embedding_dim = as.integer(embedding_dim),
+    gen_dim = as.integer(gen_dim),
+    dis_dim = as.integer(dis_dim),
+    l2scale = l2_scale
+  )
+
+  CTGANModel$new(model)
+}
+
+CTGANModel <- R6::R6Class(
+  "CTGANModel",
+  public = list(
+    initialize = function(model_obj, metadata = NULL) {
+      private$model_obj <- model_obj
+      private$metadata <- metadata
+    },
+    fit = function(train_data, batch_size, epochs) {
+      c(train_data, metadata) %<-% transform_data(train_data)
+
+      categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
+      categorical_columns <- if (length(categorical_col_indices)) {
+        reticulate::tuple(categorical_col_indices)
+      } else {
+        reticulate::tuple()
+      }
+
+      private$metadata <- metadata
+
+      private$model_obj$fit(
+        train_data = as.matrix(train_data),
+        categorical_columns = categorical_columns,
+        batch_size = as.integer(batch_size),
+        epochs = as.integer(epochs)
+      )
+    },
+    sample = function(n, batch_size) {
+      if (is.null(private$metadata)) {
+        stop("Metadata not found, consider fitting the model to data first.",
+             call. = FALSE)
+      }
+      mat <- private$model_obj$sample(
+        n = as.integer(n),
+        batch_size = as.integer(batch_size)
+      )
+
+      colnames(mat) <- private$metadata$col_info$variable
+
+      mat %>%
+        tibble::as_tibble() %>%
+        purrr::imap_dfc(function(v, nm) {
+          if (!is.null(lvls <- private$metadata$categorical_levels[[nm]])) {
+            lvls[v + 1]
+          } else {
+            v
+          }
+        })
+    }
+  ),
+  private = list(
+    model_obj = NULL,
+    metadata = NULL
+  )
+)
+
+#' @export
+fit.CTGANModel <-
+  function(object, train_data,
+           batch_size = 500, epochs = 300, ...) {
+    object$fit(train_data, batch_size, epochs)
+
+    invisible(NULL)
+  }
+
+#' @export
+ctgan_sample <- function(ctgan_model, n = 100, batch_size = 500) {
+  ctgan_model$sample(n, batch_size)
+}
