@@ -78,7 +78,7 @@ class DataTransformer(object):
             weight_concentration_prior_type='dirichlet_process',
             weight_concentration_prior=0.001,
             n_init=1,
-            max_iter=100)
+            max_iter=1000)
         gm.fit(data[:, id_].reshape([-1, 1]))
         sys.stdout.flush()
         model.append(gm)
