@@ -33,7 +33,7 @@ CTGANModel <- R6::R6Class(
 
       categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
       categorical_columns <- if (length(categorical_col_indices)) {
-        reticulate::tuple(categorical_col_indices)
+        reticulate::tuple(as.list(categorical_col_indices))
       } else {
         reticulate::tuple()
       }
