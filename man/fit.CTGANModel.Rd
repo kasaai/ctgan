@@ -4,7 +4,7 @@
 \alias{fit.CTGANModel}
 \title{Train a CTGAN Model}
 \usage{
-\method{fit}{CTGANModel}(object, train_data, batch_size = 500, epochs = 300, ...)
+\method{fit}{CTGANModel}(object, train_data, batch_size = 100, epochs = 100, ...)
 }
 \arguments{
 \item{object}{A `CTGANModel` object.}

@@ -87,7 +87,13 @@ CTGANModel <- R6::R6Class(
 #' @export
 fit.CTGANModel <-
   function(object, train_data,
-           batch_size = 500, epochs = 300, ...) {
+           batch_size = 100, epochs = 100, ...) {
+
+    # Discriminator forward pass requires batch size to divide 10
+    batch_size <- min(batch_size, nrow(train_data)) %>%
+      max(10) %>%
+      round(-1)
+
     object$fit(train_data, batch_size, epochs)
 
     invisible(NULL)
@@ -100,6 +106,6 @@ fit.CTGANModel <-
 #' @param batch_size Batch size.
 #'
 #' @export
-ctgan_sample <- function(ctgan_model, n = 100, batch_size = 500) {
+ctgan_sample <- function(ctgan_model, n = 100, batch_size = 100) {
   ctgan_model$sample(n, batch_size)
 }
