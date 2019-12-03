@@ -1,0 +1,49 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+Sys.setenv("RETICULATE_REMAP_OUTPUT_STREAMS" = 1)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ctgan
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The ctgan package provides an R interface to [CTGAN](https://github.com/DAI-Lab/CTGAN),
+a GAN-based data synthesizer. 
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("kasaai/ctgan")
+```
+## Example
+
+A quick example:
+
+```{r example}
+library(ctgan)
+
+# Install dependencies before first usage
+# install_ctgan_deps()
+
+synthesizer <- ctgan()
+synthesizer %>% 
+  fit(iris, batch_size = 50, epochs = 20)
+synthesizer %>% 
+  ctgan_sample()
+```
+
