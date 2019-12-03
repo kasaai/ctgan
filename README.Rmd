@@ -42,7 +42,7 @@ library(ctgan)
 
 synthesizer <- ctgan()
 synthesizer %>% 
-  fit(iris, batch_size = 50, epochs = 20)
+  fit(iris, epochs = 20)
 synthesizer %>% 
   ctgan_sample()
 ```
