@@ -553,7 +553,7 @@ class CTGANSynthesizer(object):
         loss_g.backward()
         optimizerG.step()
         
-      if (i + 1) % 5 == 0:  
+      if i == 0 or (i + 1) % 5 == 0:  
         print("Epoch %d, Loss G: %.4f, Loss D: %.4f" %
               (i + 1, loss_g.detach().cpu(), loss_d.detach().cpu()))
         sys.stdout.flush()
