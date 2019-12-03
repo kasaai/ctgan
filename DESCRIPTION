@@ -19,6 +19,7 @@ Description: More about what it does (maybe more than one line)
 License: Apache License (>= 2.0)
 Imports: 
     dplyr,
+    tibble,
     generics,
     R6,
     recipes,
