@@ -4,8 +4,12 @@
 \alias{ctgan}
 \title{Initialize a CTGAN Model}
 \usage{
-ctgan(embedding_dim = 128, gen_dim = c(256, 256), dis_dim = c(256,
-  256), l2_scale = 1e-06)
+ctgan(
+  embedding_dim = 128,
+  gen_dim = c(256, 256),
+  dis_dim = c(256, 256),
+  l2_scale = 1e-06
+)
 }
 \arguments{
 \item{embedding_dim}{Dimension of embedding layer.}
