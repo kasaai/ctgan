@@ -553,9 +553,10 @@ class CTGANSynthesizer(object):
         loss_g.backward()
         optimizerG.step()
         
-      print("Epoch %d, Loss G: %.4f, Loss D: %.4f" %
+      if (i + 1) % 5 == 0:  
+        print("Epoch %d, Loss G: %.4f, Loss D: %.4f" %
               (i + 1, loss_g.detach().cpu(), loss_d.detach().cpu()))
-      sys.stdout.flush()
+        sys.stdout.flush()
 
   def sample(self, n, batch_size=500):
 
