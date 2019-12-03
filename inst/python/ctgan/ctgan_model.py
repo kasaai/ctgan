@@ -291,7 +291,7 @@ class Cond(object):
           continue
         ed = st + item[0]
         tmp = np.sum(data[:, st:ed], axis=0)
-        tmp = np.log(tmp + 1)
+        # tmp = np.log(tmp + 1)
         tmp = tmp / np.sum(tmp)
         self.p[self.n_col, :item[0]] = tmp
         self.interval.append((self.n_opt, item[0]))
