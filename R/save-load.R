@@ -14,6 +14,7 @@ ctgan_save <- function(ctgan_model, path) {
 #' @param path Path to the saved model.
 #' @export
 ctgan_load <- function(path) {
+  import_ctgan()
   py_obj <- reticulate::py_load_object(file.path(path, "model.pickle"))
   metadata <- readRDS(file.path(path, "metadata.rds"))
   CTGANModel$new(py_obj, metadata)

@@ -1,3 +1,8 @@
+import_ctgan <- function() {
+  python_path <- system.file("python", package = "ctgan")
+  reticulate::import_from_path("ctgan", path = python_path)
+}
+
 #' Initialize a CTGAN Model
 #'
 #' Initializes a CTGAN model object
@@ -9,8 +14,7 @@
 #' @export
 ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
                   dis_dim = c(256, 256), l2_scale = 1e-6) {
-  python_path <- system.file("python", package = "ctgan")
-  ctgan <- reticulate::import_from_path("ctgan", path = python_path)
+  ctgan <- import_ctgan()
   model <- ctgan$ctgan_model$CTGANSynthesizer(
     embedding_dim = as.integer(embedding_dim),
     gen_dim = as.integer(gen_dim),
