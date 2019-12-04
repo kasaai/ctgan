@@ -109,3 +109,8 @@ fit.CTGANModel <-
 ctgan_sample <- function(ctgan_model, n = 100, batch_size = 100) {
   ctgan_model$sample(n, batch_size)
 }
+
+#' @export
+print.CTGANModel <- function(x, ...) {
+  cat("A CTGAN Model")
+}
