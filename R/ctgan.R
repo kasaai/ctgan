@@ -68,6 +68,13 @@ CTGANModel <- R6::R6Class(
             v
           }
         })
+    },
+    save = function(path) {
+      path <- normalizePath(path)
+      dir.create(path, recursive = TRUE, showWarnings = FALSE)
+      saveRDS(private$metadata, file.path(path, "metadata.rds"))
+      reticulate::py_save_object(private$model_obj, file.path(path, "model.pickle"))
+      invisible(NULL)
     }
   ),
   private = list(
