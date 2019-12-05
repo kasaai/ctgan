@@ -47,3 +47,12 @@ synthesizer %>%
   ctgan_sample()
 ```
 
+This generated dataset can then be shared, but one can also serialize and share the trained synthesizer:
+
+```{r}
+model_dir <- tempdir()
+synthesizer %>% 
+  ctgan_save(model_dir)
+
+ctgan_load(model_dir)
+```
