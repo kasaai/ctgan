@@ -46,7 +46,9 @@ synthesizer <- ctgan()
 synthesizer %>% 
   fit(iris, epochs = 20)
 synthesizer %>% 
-  ctgan_sample()
+  ctgan_sample() %>% 
+  # Dataset-specific post-processing
+  dplyr::mutate_if(is.numeric, ~ pmax(.x, 0.1))
 ```
 
 This generated dataset can then be shared, but one can also serialize and share the trained synthesizer:

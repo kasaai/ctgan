@@ -36,26 +36,28 @@ library(ctgan)
 synthesizer <- ctgan()
 synthesizer %>% 
   fit(iris, epochs = 20)
-#> Epoch 1, Loss G: 1.0098, Loss D: 0.0044
-#> Epoch 5, Loss G: 1.0908, Loss D: -0.0092
-#> Epoch 10, Loss G: 1.0011, Loss D: 0.0028
-#> Epoch 15, Loss G: 0.9803, Loss D: -0.0570
-#> Epoch 20, Loss G: 0.7675, Loss D: -0.1298
+#> Epoch 1, Loss G: 1.0212, Loss D: 0.1023
+#> Epoch 5, Loss G: 1.0818, Loss D: 0.0002
+#> Epoch 10, Loss G: 1.0123, Loss D: 0.0265
+#> Epoch 15, Loss G: 0.9943, Loss D: 0.0271
+#> Epoch 20, Loss G: 1.0249, Loss D: 0.0717
 synthesizer %>% 
-  ctgan_sample()
+  ctgan_sample() %>% 
+  # Dataset-specific post-processing
+  dplyr::mutate_if(is.numeric, ~ pmax(.x, 0.1))
 #> # A tibble: 100 x 5
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
 #>           <dbl>       <dbl>        <dbl>       <dbl> <chr>     
-#>  1         5.14        3.52         1.41       2.38  versicolor
-#>  2         5.58        3.74         2.74       1.88  setosa    
-#>  3         6.03        3.71         7.47       0.141 setosa    
-#>  4         5.19        3.01         6.42       2.21  virginica 
-#>  5         6.66        4.45         5.45       3.21  setosa    
-#>  6         4.29        4.43         3.44      -0.519 virginica 
-#>  7         7.47        3.07         3.88       2.22  versicolor
-#>  8         4.23        4.12         6.50       1.56  versicolor
-#>  9         7.66        3.44         3.92       0.777 versicolor
-#> 10         6.17        2.33         2.65       1.48  versicolor
+#>  1         5.71        2.97         6.95       2.83  versicolor
+#>  2         5.09        2.15         2.71       0.586 versicolor
+#>  3         7.20        3.13         2.36       0.730 setosa    
+#>  4         4.96        3.47         1.56       2.36  virginica 
+#>  5         6.71        3.29         2.71       0.678 versicolor
+#>  6         5.51        2.44         6.33       0.610 versicolor
+#>  7         6.91        2.86         9.51       0.711 versicolor
+#>  8         7.54        1.90         2.22       0.361 versicolor
+#>  9         7.01        3.01         7.02       2.83  setosa    
+#> 10         6.94        2.56         7.63       0.535 virginica 
 #> # … with 90 more rows
 ```
 
