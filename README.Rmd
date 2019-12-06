@@ -20,7 +20,9 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The ctgan package provides an R interface to [CTGAN](https://github.com/DAI-Lab/CTGAN),
-a GAN-based data synthesizer. 
+a GAN-based data synthesizer. The package enables one to create synthetic samples
+of confidential or proprietary datasets for sharing. For more details and use cases,
+see the papers in the [References](#references) section.
 
 ## Installation
 
@@ -55,4 +57,33 @@ synthesizer %>%
   ctgan_save(model_dir)
 
 ctgan_load(model_dir)
+```
+
+
+## References
+
+If you use ctgan, please consider citing the original work,
+
+- *Lei Xu, Maria Skoularidou, Alfredo Cuesta-Infante, Kalyan Veeramachaneni.* **Modeling Tabular data using Conditional GAN**. NeurIPS, 2019.
+
+and the work implementing the R package,
+
+- *Kevin Kuo.* **Generative Synthesis of Insurance Datasets**. [arXiv:1912.02423](https://arxiv.org/abs/1912.02423), 2019.
+
+```LaTeX
+@inproceedings{xu2019modeling,
+  title={Modeling Tabular data using Conditional GAN},
+  author={Xu, Lei and Skoularidou, Maria and Cuesta-Infante, Alfredo and Veeramachaneni, Kalyan},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2019}
+}
+
+@misc{kuo2019generative,
+    title={Generative Synthesis of Insurance Datasets},
+    author={Kevin Kuo},
+    year={2019},
+    eprint={1912.02423},
+    archivePrefix={arXiv},
+    primaryClass={stat.AP}
+}
 ```
