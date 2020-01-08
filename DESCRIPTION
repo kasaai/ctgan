@@ -1,7 +1,7 @@
 Type: Package
 Package: ctgan
 Title: Synthesizer Tabular Data Using Conditional GAN
-Version: 0.1.0
+Version: 0.1.9000
 Authors@R: 
     c(
       person(given = "Kevin",
