@@ -1,16 +1,12 @@
 ctgan_deps <- function() {
   c(
-    "torch",
-    "torchvision",
-    "sklearn",
-    "numpy",
-    "pandas"
+    "ctgan"
   )
 }
 
-#' Install Dependencies
+#' Install CTGAN
 #'
-#' Installs the python packages the CTGAN model requires.
+#' Installs the CTGAN python package.
 #'
 #' @param method Installation method. By default, "auto" automatically finds
 #'   a method that will work in the local environment.
@@ -25,7 +21,7 @@ ctgan_deps <- function() {
 #' This model also requires Python 3, Python 2 is unsupported.
 #'
 #' @export
-install_ctgan_deps <- function(method = c("auto", "virtualenv", "conda"),
+install_ctgan <- function(method = c("auto", "virtualenv", "conda"),
                                conda = "auto",
                                envname = NULL,
                                restart_session = TRUE,
