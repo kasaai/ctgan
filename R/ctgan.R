@@ -34,7 +34,7 @@ CTGANModel <- R6::R6Class(
       private$model_obj <- model_obj
       private$metadata <- metadata
     },
-    fit = function(train_data, epochs) {
+    fit = function(train_data, epochs, log_frequency) {
       c(train_data, metadata) %<-% transform_data(train_data)
 
       categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
@@ -49,7 +49,8 @@ CTGANModel <- R6::R6Class(
       private$model_obj$fit(
         train_data = as.matrix(train_data),
         discrete_columns = categorical_columns,
-        epochs = as.integer(epochs)
+        epochs = as.integer(epochs),
+        log_frequency = log_frequency
       )
     },
     sample = function(n) {
@@ -90,14 +91,16 @@ CTGANModel <- R6::R6Class(
 #' @param object A `CTGANModel` object.
 #' @param train_data Training data, should be a data frame.
 #' @param epochs Number of epochs to train.
+#' @param log_frequency Whether to use log frequency of categorical levels in
+#'   conditional sampling. Defaults to `TRUE`.
 #' @param ... Additional arguments, currently unused.
 #'
 #' @export
 fit.CTGANModel <-
   function(object, train_data,
-           epochs = 100, ...) {
+           epochs = 100, log_frequency = TRUE,...) {
 
-    object$fit(train_data, epochs)
+    object$fit(train_data, epochs, log_frequency)
 
     invisible(NULL)
   }
