@@ -4,14 +4,12 @@
 \alias{ctgan_sample}
 \title{Synthesize Data Using a CTGAN Model}
 \usage{
-ctgan_sample(ctgan_model, n = 100, batch_size = 100)
+ctgan_sample(ctgan_model, n = 100)
 }
 \arguments{
 \item{ctgan_model}{A fitted `CTGANModel` object.}
 
 \item{n}{Number of rows to generate.}
-
-\item{batch_size}{Batch size.}
 }
 \description{
 Synthesize Data Using a CTGAN Model

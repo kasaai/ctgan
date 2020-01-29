@@ -31,16 +31,31 @@ A quick example:
 library(ctgan)
 
 # Install dependencies before first usage
-# install_ctgan_deps()
+# install_ctgan()
 
 synthesizer <- ctgan()
 synthesizer %>% 
   fit(iris, epochs = 20)
-#> Epoch 1, Loss G: 1.0212, Loss D: 0.1023
-#> Epoch 5, Loss G: 1.0818, Loss D: 0.0002
-#> Epoch 10, Loss G: 1.0123, Loss D: 0.0265
-#> Epoch 15, Loss G: 0.9943, Loss D: 0.0271
-#> Epoch 20, Loss G: 1.0249, Loss D: 0.0717
+#> Epoch 1, Loss G: 1.2498, Loss D: -0.0258
+#> Epoch 2, Loss G: 1.2413, Loss D: -0.0013
+#> Epoch 3, Loss G: 1.2533, Loss D: -0.0163
+#> Epoch 4, Loss G: 1.2115, Loss D: -0.0140
+#> Epoch 5, Loss G: 1.2236, Loss D: -0.0036
+#> Epoch 6, Loss G: 1.1802, Loss D: -0.0423
+#> Epoch 7, Loss G: 1.1796, Loss D: -0.0431
+#> Epoch 8, Loss G: 1.1655, Loss D: -0.0262
+#> Epoch 9, Loss G: 1.1485, Loss D: 0.0048
+#> Epoch 10, Loss G: 1.1656, Loss D: -0.0655
+#> Epoch 11, Loss G: 1.1132, Loss D: -0.0001
+#> Epoch 12, Loss G: 1.1015, Loss D: 0.0136
+#> Epoch 13, Loss G: 1.0568, Loss D: -0.0220
+#> Epoch 14, Loss G: 1.0911, Loss D: -0.0036
+#> Epoch 15, Loss G: 1.0389, Loss D: -0.0355
+#> Epoch 16, Loss G: 1.0149, Loss D: -0.0320
+#> Epoch 17, Loss G: 1.0376, Loss D: 0.0366
+#> Epoch 18, Loss G: 1.0651, Loss D: -0.0760
+#> Epoch 19, Loss G: 0.9866, Loss D: -0.0425
+#> Epoch 20, Loss G: 1.0371, Loss D: -0.0767
 synthesizer %>% 
   ctgan_sample() %>% 
   # Dataset-specific post-processing
@@ -48,16 +63,16 @@ synthesizer %>%
 #> # A tibble: 100 x 5
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
 #>           <dbl>       <dbl>        <dbl>       <dbl> <chr>     
-#>  1         5.71        2.97         6.95       2.83  versicolor
-#>  2         5.09        2.15         2.71       0.586 versicolor
-#>  3         7.20        3.13         2.36       0.730 setosa    
-#>  4         4.96        3.47         1.56       2.36  virginica 
-#>  5         6.71        3.29         2.71       0.678 versicolor
-#>  6         5.51        2.44         6.33       0.610 versicolor
-#>  7         6.91        2.86         9.51       0.711 versicolor
-#>  8         7.54        1.90         2.22       0.361 versicolor
-#>  9         7.01        3.01         7.02       2.83  setosa    
-#> 10         6.94        2.56         7.63       0.535 virginica 
+#>  1         5.86        1.77        2.83        1.87  versicolor
+#>  2         4.52        3.49        0.182       2.98  setosa    
+#>  3         4.50        2.02        0.231       0.405 setosa    
+#>  4         6.57        3.12        2.28        3.25  versicolor
+#>  5         4.36        3.27        2.01        2.64  virginica 
+#>  6         6.98        2.32        2.95        1.71  versicolor
+#>  7         4.30        1.59        2.49        0.273 setosa    
+#>  8         5.12        1.90        0.521       2.77  versicolor
+#>  9         7.23        2.34        0.411       3.09  virginica 
+#> 10         5.36        1.99        2.18        1.97  setosa    
 #> # … with 90 more rows
 ```
 

@@ -40,7 +40,7 @@ A quick example:
 library(ctgan)
 
 # Install dependencies before first usage
-# install_ctgan_deps()
+# install_ctgan()
 
 synthesizer <- ctgan()
 synthesizer %>% 

@@ -8,7 +8,8 @@ ctgan(
   embedding_dim = 128,
   gen_dim = c(256, 256),
   dis_dim = c(256, 256),
-  l2_scale = 1e-06
+  l2_scale = 1e-06,
+  batch_size = 500
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ ctgan(
 \item{dis_dim}{Dimensions of discriminator layers.}
 
 \item{l2_scale}{ADAM weight decay.}
+
+\item{batch_size}{Batch size.}
 }
 \description{
 Initializes a CTGAN model object

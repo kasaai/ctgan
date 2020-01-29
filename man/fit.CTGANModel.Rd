@@ -4,16 +4,17 @@
 \alias{fit.CTGANModel}
 \title{Train a CTGAN Model}
 \usage{
-\method{fit}{CTGANModel}(object, train_data, batch_size = 100, epochs = 100, ...)
+\method{fit}{CTGANModel}(object, train_data, epochs = 100, log_frequency = TRUE, ...)
 }
 \arguments{
 \item{object}{A `CTGANModel` object.}
 
 \item{train_data}{Training data, should be a data frame.}
 
-\item{batch_size}{Batch size.}
-
 \item{epochs}{Number of epochs to train.}
+
+\item{log_frequency}{Whether to use log frequency of categorical levels in
+conditional sampling. Defaults to `TRUE`.}
 
 \item{...}{Additional arguments, currently unused.}
 }
