@@ -1,8 +1,3 @@
-import_ctgan <- function() {
-  python_path <- system.file("python", package = "ctgan")
-  reticulate::import_from_path("ctgan", path = python_path)
-}
-
 #' Initialize a CTGAN Model
 #'
 #' Initializes a CTGAN model object
