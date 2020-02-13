@@ -60,6 +60,7 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          python3 -m pip install --upgrade --ignore-installed virtualenv
 
       - name: Install dependencies
         run:
