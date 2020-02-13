@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 # ctgan
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/kasaai/ctgan/branch/master/graph/badge.svg)](https://codecov.io/gh/kasaai/ctgan?branch=master)
+[![R build status](https://github.com/kasaai/ctgan/workflows/R-CMD-check/badge.svg)](https://github.com/kasaai/ctgan/actions)
 <!-- badges: end -->
 
 The ctgan package provides an R interface to [CTGAN](https://github.com/DAI-Lab/CTGAN),
