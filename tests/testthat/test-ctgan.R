@@ -1,4 +1,5 @@
 test_that("ctgan default params", {
+  ensure_ctgan_installed()
   m <- ctgan()
   expect_attribute_identical(m, "batch_size", 500L)
   expect_attribute_identical(m, "embedding_dim", 128L)
@@ -8,6 +9,7 @@ test_that("ctgan default params", {
 })
 
 test_that("ctgan param setting", {
+  ensure_ctgan_installed()
   m <- ctgan(embedding_dim = 64, gen_dim = c(64, 64), dis_dim = c(32, 32),
              l2_scale = 1e-4, batch_size = 128)
 
