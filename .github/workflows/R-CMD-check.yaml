@@ -60,12 +60,16 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          python3 -m pip install --upgrade pip
-          python3 -m pip install --upgrade --ignore-installed virtualenv
 
       - name: Install dependencies
         run:
           Rscript -e "library(remotes)" -e "deps <- readRDS('depends.Rds')" -e "deps[['installed']] <- vapply(deps[['package']], remotes:::local_sha, character(1))" -e "update(deps)" -e "remotes::install_cran('rcmdcheck')"
+
+      - name: Install miniconda
+        run: |
+          Rscript -e "reticulate::install_miniconda()"
+          Rscript -e "remotes::install_local()"
+          Rscript -e "reticulate::conda_create('r-reticulate', packages = 'python==3.6.10')"
 
       - name: Check
         run:
