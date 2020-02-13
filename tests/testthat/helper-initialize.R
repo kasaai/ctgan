@@ -6,6 +6,6 @@ expect_attribute_identical <- function(model, attribute, value) {
   expect_identical(get_model_attribute(model, attribute), value)
 }
 
-tryCatch(reticulate::import("foo"), error = function(e) {
+tryCatch(reticulate::import("ctgan"), error = function(e) {
   if (grepl("module named 'ctgan", e)) install_ctgan()
 })
