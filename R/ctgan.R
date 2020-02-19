@@ -1,12 +1,8 @@
-import_ctgan <- function() {
-  python_path <- system.file("python", package = "ctgan")
-  reticulate::import_from_path("ctgan", path = python_path)
-}
-
 #' Initialize a CTGAN Model
 #'
 #' Initializes a CTGAN model object
 #'
+#' @import forge
 #' @param embedding_dim Dimension of embedding layer.
 #' @param gen_dim Dimensions of generator layers.
 #' @param dis_dim Dimensions of discriminator layers.
@@ -15,13 +11,19 @@ import_ctgan <- function() {
 #' @export
 ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
                   dis_dim = c(256, 256), l2_scale = 1e-6, batch_size = 500) {
+  embedding_dim <- cast_integer(embedding_dim)
+  gen_dim <- cast_integer(gen_dim)
+  dis_dim <- cast_integer(dis_dim)
+  l2_scale <- cast_scalar_double(l2_scale)
+  batch_size <- cast_scalar_integer(batch_size)
+
   ctgan <- reticulate::import("ctgan")
   model <- ctgan$CTGANSynthesizer(
-    embedding_dim = as.integer(embedding_dim),
-    gen_dim = as.integer(gen_dim),
-    dis_dim = as.integer(dis_dim),
+    embedding_dim = embedding_dim,
+    gen_dim = gen_dim,
+    dis_dim = dis_dim,
     l2scale = l2_scale,
-    batch_size = as.integer(batch_size)
+    batch_size = batch_size
   )
 
   CTGANModel$new(model)
@@ -49,7 +51,7 @@ CTGANModel <- R6::R6Class(
       private$model_obj$fit(
         train_data = as.matrix(train_data),
         discrete_columns = categorical_columns,
-        epochs = as.integer(epochs),
+        epochs = epochs,
         log_frequency = log_frequency
       )
     },
@@ -58,7 +60,7 @@ CTGANModel <- R6::R6Class(
         stop("Metadata not found, consider fitting the model to data first.",
              call. = FALSE)
       }
-      mat <- private$model_obj$sample(n = as.integer(n))
+      mat <- private$model_obj$sample(n = n)
 
       colnames(mat) <- private$metadata$col_info$variable
 
@@ -99,6 +101,8 @@ CTGANModel <- R6::R6Class(
 fit.CTGANModel <-
   function(object, train_data,
            epochs = 100, log_frequency = TRUE,...) {
+    epochs <- cast_scalar_integer(epochs)
+    log_frequency <- cast_scalar_logical(log_frequency)
 
     object$fit(train_data, epochs, log_frequency)
 
@@ -112,6 +116,7 @@ fit.CTGANModel <-
 #'
 #' @export
 ctgan_sample <- function(ctgan_model, n = 100) {
+  n <- cast_scalar_integer(n)
   ctgan_model$sample(n)
 }
 
