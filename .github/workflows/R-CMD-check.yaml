@@ -74,6 +74,7 @@ jobs:
       - name: Install PyTorch on Windows
         if: runner.os == 'Windows'
         run: |
+          Rscript -e "system2(paste0('pathed /append ', reticulate::miniconda_path(), ' /user'))"
           conda activate r-reticulate
           pip install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
           conda deactivate
