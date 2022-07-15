@@ -6,24 +6,34 @@
 #' @param embedding_dim Dimension of embedding layer.
 #' @param gen_dim Dimensions of generator layers.
 #' @param dis_dim Dimensions of discriminator layers.
-#' @param l2_scale ADAM weight decay.
+#' @param gen_decay Generator weight decay for ADAM Optimizer.
+#' @param dis_decay Discriminator weight decay for ADAM Optimizer.
 #' @param batch_size Batch size.
+#' @param log_frequency Whether to use log frequency of categorical levels in
+#' conditional sampling. Defaults to TRUE.
+#'
 #' @export
 ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
-                  dis_dim = c(256, 256), l2_scale = 1e-6, batch_size = 500) {
+                  dis_dim = c(256, 256), gen_decay = 1e-6,
+                  dis_decay = gen_decay, batch_size = 500,
+                  log_frequency = TRUE) {
   embedding_dim <- cast_integer(embedding_dim)
   gen_dim <- cast_integer(gen_dim)
   dis_dim <- cast_integer(dis_dim)
-  l2_scale <- cast_scalar_double(l2_scale)
+  gen_decay <- cast_scalar_double(gen_decay)
+  dis_decay <- cast_scalar_double(dis_decay)
   batch_size <- cast_scalar_integer(batch_size)
+  log_frequency <- cast_scalar_logical(log_frequency)
 
   ctgan <- reticulate::import("ctgan")
   model <- ctgan$CTGANSynthesizer(
     embedding_dim = embedding_dim,
-    gen_dim = gen_dim,
-    dis_dim = dis_dim,
-    l2scale = l2_scale,
-    batch_size = batch_size
+    generator_dim = gen_dim,
+    discriminator_dim  = dis_dim,
+    generator_decay = gen_decay,
+    discriminator_decay = dis_decay,
+    batch_size = batch_size,
+    log_frequency = log_frequency
   )
 
   CTGANModel$new(model)
@@ -36,7 +46,7 @@ CTGANModel <- R6::R6Class(
       private$model_obj <- model_obj
       private$metadata <- metadata
     },
-    fit = function(train_data, epochs, log_frequency) {
+    fit = function(train_data, epochs) {
       c(train_data, metadata) %<-% transform_data(train_data)
 
       categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
@@ -51,8 +61,7 @@ CTGANModel <- R6::R6Class(
       private$model_obj$fit(
         train_data = as.matrix(train_data),
         discrete_columns = categorical_columns,
-        epochs = epochs,
-        log_frequency = log_frequency
+        epochs = epochs
       )
     },
     sample = function(n) {
@@ -93,18 +102,15 @@ CTGANModel <- R6::R6Class(
 #' @param object A `CTGANModel` object.
 #' @param train_data Training data, should be a data frame.
 #' @param epochs Number of epochs to train.
-#' @param log_frequency Whether to use log frequency of categorical levels in
-#'   conditional sampling. Defaults to `TRUE`.
 #' @param ... Additional arguments, currently unused.
 #'
 #' @export
 fit.CTGANModel <-
   function(object, train_data,
-           epochs = 100, log_frequency = TRUE,...) {
+           epochs = 100,...) {
     epochs <- cast_scalar_integer(epochs)
-    log_frequency <- cast_scalar_logical(log_frequency)
 
-    object$fit(train_data, epochs, log_frequency)
+    object$fit(train_data, epochs)
 
     invisible(NULL)
   }
