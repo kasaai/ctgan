@@ -8,7 +8,8 @@ ctgan(
   embedding_dim = 128,
   gen_dim = c(256, 256),
   dis_dim = c(256, 256),
-  l2_scale = 1e-06,
+  gen_decay = 1e-06,
+  dis_decay = gen_decay,
   batch_size = 500
 )
 }
@@ -19,7 +20,9 @@ ctgan(
 
 \item{dis_dim}{Dimensions of discriminator layers.}
 
-\item{l2_scale}{ADAM weight decay.}
+\item{gen_decay}{Generator weight decay for ADAM Optimizer.}
+
+\item{dis_decay}{Discriminator weight decay for ADAM Optimizer.}
 
 \item{batch_size}{Batch size.}
 }
